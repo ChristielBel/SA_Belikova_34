@@ -1,15 +1,14 @@
 #!/bin/bash
 
-timeframe=$1
-file=$2
+file=$1
+timeframe=$2
+end=$((SECONDS + timeframe))
 
-touch $file.txt
-
-while [ $timeframe > 0 ]
-do
-	loadavg = cat /proc/loadavg
-	dt = date "+[\%d\%m](http://\%d\%m/).\%Y \%H\%M"
-	echo "$dt $file" >> $file.txt
-	timeframe=$(( timeframe - 1))
-	sleep 1
+while [ $SECONDS -lt $end ]; do
+    loadavg=$(cat /proc/loadavg)
+    dt=$(date "+%d.%m.%y %H:%M")
+    echo "$dt = $loadavg" >> "$file"
+    sleep 1
 done
+
+echo "Logging completed. Output saved to $file."
