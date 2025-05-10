@@ -83,5 +83,4 @@ jobs:
              && podman run -d \
                 --name main-container \
                 -p 8118:8000 \
-                -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
                 ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest"
