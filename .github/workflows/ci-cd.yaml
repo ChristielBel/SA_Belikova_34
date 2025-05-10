@@ -75,8 +75,7 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Deploy to server
         run: |
-          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-            -p ${{ secrets.SSH_PORT }} \
+          ssh -p ${{ secrets.SSH_PORT }} \ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
             "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
              && podman stop main-container || true \
              && podman rm main-container || true \
