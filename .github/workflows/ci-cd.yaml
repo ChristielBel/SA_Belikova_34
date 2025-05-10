@@ -65,23 +65,23 @@ jobs:
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
             && docker system prune -af
 
-    deploy:
-        runs-on: self-hosted
-        needs: [ test ]
-        steps:
-          - name: Set ssh key
-            uses: webfactory/ssh-agent@v0.9.0
-            with:
-              ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          - name: Deploy to server
-            run: |
-              ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-                -p ${{ secrets.SSH_PORT }} \
-                "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
-                 && podman stop main-container || true \
-                 && podman rm main-container || true \
-                 && podman run -d \
-                    --name main-container \
-                    -p 8118:8000 \
-                    -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
-                    ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest"
+  deploy:
+    runs-on: self-hosted
+    needs: [ test ]
+    steps:
+      - name: Set ssh key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Deploy to server
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+            -p ${{ secrets.SSH_PORT }} \
+            "podman pull ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
+             && podman stop main-container || true \
+             && podman rm main-container || true \
+             && podman run -d \
+                --name main-container \
+                -p 8118:8000 \
+                -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+                ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest"
