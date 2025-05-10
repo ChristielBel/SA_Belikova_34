@@ -3,5 +3,5 @@ WORKDIR /app
 RUN apk add --no-cache make
 COPY . .
 RUN make install
-EXPOSE 8000
+EXPOSE 8058
 CMD ["make", "run"]
