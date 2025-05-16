@@ -1,13 +1,13 @@
 .PHONY: install install-dev test run
 
 install:
-	pip install .
+	pip install --prefix=/install .
 
 install-dev:
-	pip install ".[test]"
+	pip install --prefix=/install ".[test]"
 
 test:
 	pytest tests
 
 run:
-	uvicorn src.main:app --reload
+	uvicorn src.main:app --host 0.0.0.0 --port 8058 --reload
