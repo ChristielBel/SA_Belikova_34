@@ -6,7 +6,6 @@ WORKDIR /app
 
 # Copy application and test files
 COPY pyproject.toml ./
-COPY conftest.py ./
 COPY src/ ./src
 COPY tests/ ./tests  
 
