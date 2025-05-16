@@ -27,7 +27,6 @@ WORKDIR /app
 COPY --from=builder /install /usr/local
 
 # Copy application and test files from builder stage
-COPY --from=builder /app/conftest.py ./  
 COPY --from=builder /app/src ./src
 COPY --from=builder /app/tests ./tests  
 
