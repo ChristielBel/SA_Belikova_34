@@ -58,12 +58,13 @@ jobs:
         run: |
           docker run --rm \
             --network host \
+            -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
-            sh -c "while ! nc -z localhost 5432; do sleep 1; done && make install-dev && make test"
+            sh -c "while ! nc -z localhost 5432; do sleep 1; done && make test"
       - name: Cleanup
         run: |
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
-            && docker system prune -af
+            && docker system prune -af 
 
   deploy:
     runs-on: self-hosted
@@ -86,4 +87,5 @@ jobs:
              && podman run -d \
                 --network host \
                 --name $CONTAINER_NAME \
+                -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
                 ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest"
