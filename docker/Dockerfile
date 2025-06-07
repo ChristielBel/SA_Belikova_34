@@ -11,4 +11,4 @@ COPY . .
 COPY --from=builder /install /usr/local
 
 EXPOSE 8058
-CMD ["unicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8058"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8058"]
