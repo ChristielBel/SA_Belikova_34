@@ -60,7 +60,7 @@ jobs:
             --network host \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
-            sh -c "while ! nc -z localhost 5432; do sleep 1; done && make test"
+            sh -c "while ! nc -z localhost 5432; do sleep 1; done && pip install --prefix=/install ".[test]" && pytest tests"
       - name: Cleanup
         run: |
           docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/administration:latest \
